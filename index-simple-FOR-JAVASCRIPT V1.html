@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+  <title>Autoplay Video + video-unmute.js Plugin</title>
+  <!--  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/video.js/7.5.0/video-js.min.css'>-->
+  <!--  <link href="https://cdn.jsdelivr.net/gh/onigetoc/videojs-unmute/dist/videojs-unmute.min.css" rel="stylesheet">-->
+
+  <!--  <link href="https://cdn.jsdelivr.net/gh/onigetoc/videojs-unmute/dist/videojs-unmute.min.css" rel="stylesheet">-->
+  <link rel="stylesheet" href="./dist/video-unmute.css?3=0">
+  <!--  <link rel="stylesheet" href="./style.css">-->
+
+  <!--  <link href="https://cdn.jsdelivr.net/gh/onigetoc/videojs-unmute/dist/videojs-unmute.min.css" rel="stylesheet">-->
+  <!--  <link rel="stylesheet" href="./style.css">-->
+
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      margin: 20px 20%;
+    }
+
+    @media only screen and (max-width: 800px) {
+      body {
+        margin: 10px 10px;
+      }
+    }
+
+  </style>
+
+</head>
+
+<style>
+  body {
+    background-color: #111;
+    color: #fff;
+    margin: 20px 20%;
+  }
+
+  @media only screen and (max-width: 800px) {
+    body {
+      margin: 10px;
+    }
+  }
+
+</style>
+
+<body>
+  <!-- partial:index.partial.html -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!--  <div id="videocontainer" class="classtest">-->
+  <!--    <video id="vid1" class="vid-unmute vid-default-skin vid-fluid" poster="https://i.imgur.com/xlYfLmH.png" width="640" height="360" controls playsinline autoplay preload="none" data-setup='{ "techOrder": ["html5"], "sources": [{ "type": "application/x-mpegURL", "src": "https://nmxlive.akamaized.net/hls/live/529965/Live_1/index.m3u8"}]}'></video>-->
+  <!--  </div>-->
+
+  <h2>When the video is not fully visible on page, it pauses</h2>
+
+  <h3 id="output" style="position:fixed;left: 50px; top:100px;z-index: 99;background-color: #00000085; padding: 8px"></h3>
+
+    <div id="videocontainer" class="vid-wrapper">
+  <video src="https://raw.githubusercontent.com/rpsthecoder/h/gh-pages/OSRO-animation.mp4" autoplay playsinline controls=""></video>
+    </div>
+  <p>Animation by Seoro Oh (via <a href="https://www.youtube.com/user/osro1113" target="_blank">Osro's YouTube Channel</a>)</p>
+
+  <div class="bigspace" style="height: 300px;"></div>
+
+
+    <div id="videocontainer2" class="vid-wrapper">
+  <video id="vid1" class="vid-default-skin vid-fluid" controls muted playsinline preload="auto" poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg">
+    <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+    <source src="https://jplayer.org/video/m4v/Big_Buck_Bunny_Trailer.m4v" type="video/mp4">
+    <!--  <source src="movie.ogg" type="video/ogg">-->
+    Your browser does not support the video tag.
+  </video>
+    </div>
+
+
+
+  <div class="bigspace" style="height: 1000px;"></div>
+
+
+  <!--  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>-->
+  <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.5.0/video.min.js"></script>-->
+  <!-- partial -->
+  <!--  <script src="./dist/video-unmute.js?1=5"></script>-->
+  <!--  <script src="./dist/videojs-unmute.min.js"></script>-->
+  <!--  <script src="https://cdn.jsdelivr.net/gh/onigetoc/videojs-unmute@main/dist/videojs-unmute.min.js"></script>-->
+
+  <script>
+    //    if not developer mode add timestamp to prevent caching
+    //        var timeStamp = typeof bDeveloperMode === 'undefined' ? ('?_=' + new Date()).valueOf() : '';
+    //        document.writeln('<scr' + 'ipt type="text/javascript" src="./dist/videojs-unmute.js' + timeStamp + '"></scr' + 'ipt>');
+    //  document.writeln('<scr' + 'ipt type="text/javascript" src="./dist/script-simple.js' + timeStamp + '"></scr' + 'ipt>');
+
+  </script>
+
+  <script>
+    // POSSIBLE OPTIONS TO ADD?
+    // BUTTON LEFT RIGHT TOP BOTTOM - BUTTON COLOR WHITE OR BLACK -
+
+    // LANGAGE TRANSLATE JSON
+    const translate = {
+      en: "UNMUTE",
+      zh: "激活声音",
+      hi: "ध्वनि सक्रिय करें",
+      es: "ACTIVAR SONIDO",
+      fr: "ACTIVER LE SON",
+      ar: "تنشيط الصوت",
+      bn: "নিঃশব্দ",
+      ru: "ВКЛЮЧИТЬ ЗВУК",
+      pt: "ATIVAR SOM",
+      de: "TON AKTIVIEREN",
+      id: "AKTIFKAN SUARA"
+    };
+
+    // GET USER BROWSER LANGAGE
+    let lang = window.navigator.languages ? window.navigator.languages[0] : null;
+    lang =
+      lang ||
+      window.navigator.language ||
+      window.navigator.browserLanguage ||
+      window.navigator.userLanguage;
+
+    // lang = "de"; // TEST
+
+    if (typeof lang === "undefined" || lang === null) lang = "us-en";
+
+    let shortLang = lang;
+    if (shortLang.indexOf("-") !== -1) shortLang = shortLang.split("-")[0];
+    if (shortLang.indexOf("_") !== -1) shortLang = shortLang.split("_")[0];
+
+    console.log(lang, shortLang);
+
+    if (typeof translate[shortLang] === "undefined") {
+      console.log('Variable "shortLang" is undefined.');
+      translated = "UNMUTE";
+    } else {
+      console.log('Variable "shortLang": ' + translate[shortLang]);
+      translated = translate[shortLang];
+    }
+
+
+    /*************** PLAY VIDEO ON VIEWPORT FUNCTION ****************/
+
+    let output = document.getElementById('output');
+
+
+    let hasPlayed = false;
+    let haveOverlay = false;
+    let allevents = false;
+    //    let isWrapped = false;
+
+
+    //    PLUGIN OPTIONS
+    let wrapvideo = true;
+//    let onlyAutoplay = false;
+    let onlyAutoplay = true;
+    let playerIsAutoplay = false;
+
+
+    function playPauseVideo() {
+      let players = document.querySelectorAll("video");
+      //      let medias = Array.prototype.slice.apply(document.querySelectorAll('audio,video'));
+      players.forEach((player, index) => {
+        // We can only control playback without insteraction if video is mute
+
+        //        alert(video.muted);
+
+        console.log(index);
+
+        //        alert(player.autoplay)
+        /******* CHECK IF AUTOPLAY *******/
+        //        if (player.autoplay) {
+        //          player.muted(true);
+        //          isMuted = true;
+        //          //      haveOverlay = true;
+        //        } 
+        //        else if (!onlyAutoplay) {
+        //          return false;
+        //        }
+
+        // do 
+
+//        if (onlyAutoplay) {
+//
+//          if (!player.autoplay())
+//            playerIsAutoplay = true;
+//
+//        }
+        
+        alert(player.autoplay)
+
+        // IF AUTOPLAY TRUE
+//        if (player.autoplay && onlyAutoplay) {
+
+          // plugin option
+          if (wrapvideo) {
+
+            // create wrapper container
+            let wrapper = document.createElement('div');
+            wrapper.classList.add("vid-wrapper");
+            // insert wrapper before el in the DOM tree
+            player.parentNode.insertBefore(wrapper, player);
+            // move el into wrapper
+            wrapper.appendChild(player);
+
+            //            isWrapped = true;
+
+
+
+            let divOverlay = document.createElement("div");
+            //        divOverlay.addEventListener('touchmove', handleTouchMove, false), function () {
+
+            divOverlay.classList.add("vid-unmute-overlay");
+            divOverlay.setAttribute("style", "z-index: 1");
+
+            //        player.appendChild(divOverlay);
+            wrapper.appendChild(divOverlay);
+
+            let unmutedbutton = document.createElement("span");
+            //        let getoverlay = document
+            //          .getElementById(thisplayerid)
+            //          .getElementsByClassName("vjs-unmute-overlay")[0];
+            // var unmutedbutton = document.querySelector('#foo .bar');
+            // unmutedbutton.textContent = "UNMUTE";
+
+            //          unmutedbutton.textContent = translated;
+            unmutedbutton.innerHTML = '<span class="vid-icon vid-baseline"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 22"><path fill="currentColor" d="M12 4L9.91 6.09L12 8.18M4.27 3L3 4.27L7.73 9H3v6h4l5 5v-6.73l4.25 4.26c-.67.51-1.42.93-2.25 1.17v2.07c1.38-.32 2.63-.95 3.68-1.81L19.73 21L21 19.73l-9-9M19 12c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.916 8.916 0 0 0 21 12c0-4.28-3-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71m-2.5 0c0-1.77-1-3.29-2.5-4.03v2.21l2.45 2.45c.05-.2.05-.42.05-.63Z"/></svg></span> ' + translated;
+            unmutedbutton.classList.add("vid-unmute");
+            unmutedbutton.setAttribute("style", "z-index: 1");
+
+            divOverlay.appendChild(unmutedbutton);
+
+
+            // +++ Add button's event listener +++
+            divOverlay.addEventListener("click", function() {
+              player.muted = !player.muted;
+              isMuted = false;
+              //          player.load();
+              //          player.play();
+              //          player.volume(1);
+              wrapper.removeChild(divOverlay);
+              haveOverlay = false;
+            });
+
+          }
+          //        alert(player.autoplay)
+          /******* CHECK IF AUTOPLAY *******/
+          //        if (player.autoplay) {
+          //          player.muted(true);
+          //          isMuted = true;
+          //          //      haveOverlay = true;
+          //        } else if (!onlyAutoplay) {
+          //          return false;
+          //        }
+
+
+          /******* CHECK IF AUTOPLAY *******/
+          //        if (player.autoplay()) {
+          //          player.muted(true);
+          //          isMuted = true;
+          //          //      haveOverlay = true;
+          //        } else {
+          //          return false;
+          //        }
+
+
+          player.onplay = (event) => {
+
+            isPaused = false;
+
+            // https://stackoverflow.com/a/52103630/211324
+            //                    players.forEach(function(video) {
+            //                      if(event.target != video) video.pause();
+            //                    });
+
+            //                if (videoIndex !== index) {
+            //                    this.player.pause();
+            //                }
+
+            console.log('The Boolean paused property is now false. Either the ' +
+              'play() method was called or the autoplay attribute was toggled.');
+
+            output.innerText = output.textContent = 'Playing event triggered';
+
+          };
+
+
+          // Playing event
+          //                  video.addEventListener("play", function(event) {
+          //                    isPaused = false;
+          //                    //          alert('on playing isPaused '+isPaused)
+          //                    output.innerText = output.textContent = 'Playing event triggered';
+          //                    console.log('Playing event triggered');
+          //                    
+          //                    //video.forEach(function(video) {
+          //                      if(event.target != video) video.pause();
+          //                    //});
+          //                    
+          //                  });
+
+          // Pause event
+          player.addEventListener("pause", function() {
+            isPaused = true;
+            //          alert('on pause isPaused '+isPaused)
+            output.innerText = output.textContent = 'Pause event triggered';
+            console.log('Pause event triggered');
+          });
+
+
+          // Ended event
+          player.addEventListener("ended", function() {
+            player.currentTime = 0.0;
+            player.paused = true;
+            isPaused = true;
+            output.innerText = output.textContent = 'Ended event triggered';
+            console.log('Ended event triggered');
+          });
+
+          // Seeking event
+          player.addEventListener("seeking", function() {
+            output.innerText = output.textContent = 'Seeking event triggered';
+            console.log('Seeking event triggered');
+          });
+
+          // Volume changed event
+          player.addEventListener("volumechange", function(e) {
+            output.innerText = output.textContent = 'Volume change event triggered';
+            console.log('Volume change event triggered');
+          });
+
+
+
+          let isPaused = false; /* flag for auto-pausing of the video */
+          player.muted = true;
+
+          // Play is a promise so we need to check we have it
+          let playPromise = player.play();
+
+          if (playPromise !== undefined) {
+            playPromise.then((_) => {
+              let observer = new IntersectionObserver(
+                (entries, observer) => {
+                  entries.forEach((entry) => {
+
+                    // https://codepen.io/palamida/pen/BaBqgKY
+                    if (entry.intersectionRatio !== 1 && !player.paused) {
+                      player.pause();
+                      //                    alert(isPaused);
+                      isPaused = true;
+                      //                    alert(video.muted);
+                      //                    video.muted = true; // MUTE VIDEO
+                    } else if (player.paused && entry.isIntersecting) {
+                      //                    alert(player.muted);
+                      //                    alert(isPaused);
+                      player.play();
+                      isPaused = false;
+
+
+                      /****** ON PLAY VIDEO PAUSE OTHERS ******/
+                      player.addEventListener('play', function(event) {
+
+                        hasPlayed = true;
+
+                        players.forEach(function(player) {
+                          if (event.target != player) player.pause();
+                        });
+
+                      });
+
+                      //                    video[0].addEventListener('play', function(event) {
+                      //                      players.forEach(function(video) {
+                      //                        if (event.target != video) video.pause();
+                      //                      });
+                      //                    });
+
+                      //                    if(event.target != video) video.pause();
+
+
+                      //                    video.muted = false; // UNMUTE VIDEO
+                    }
+
+                    // OLD ONE
+                    //                  if (entry.intersectionRatio !== 1 && !video.paused) {
+                    //                    video.pause();
+                    //                    //                    alert(isPaused);
+                    //                    isPaused = true;
+                    //                    //                    alert(video.muted);
+                    //                    //                    video.muted = true; // MUTE VIDEO
+                    //                  } else if (video.paused) {
+                    //                    //                    alert(video.muted);
+                    //                    //                    alert(isPaused);
+                    //                    video.play();
+                    //                    isPaused = false;
+                    //                    //                    video.muted = false; // UNMUTE VIDEO
+                    //                  }
+
+                  });
+                }, {
+                  threshold: 0.5
+                }
+              );
+              observer.observe(player);
+            });
+          }
+
+//        } // IF AUTOPLEY TRUE END;
+
+      });
+    }
+
+    // And you would kick this off where appropriate with:
+    playPauseVideo();
+
+  </script>
+
+
+</body>
+
+</html>
