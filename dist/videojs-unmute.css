@@ -1,0 +1,66 @@
+/* Style vjs-unmute */
+.vid-unmute-overlay {
+  position: absolute;
+  background-color: rgba(43,51,63,.10); 
+/*  opacity: .99;*/
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 99;
+}
+
+.vid-unmute {
+  left: 15px;
+  top: 15px;
+  border-radius: 5px;
+  position: absolute;
+/*  line-height: 30px;*/
+  text-align: center;
+  cursor: pointer;
+  font-size: 16px;
+  letter-spacing: .05em;
+  color: white;
+  font-weight: 500;
+  background-color: rgba(0,0,0,.5);
+  padding: 12px 16px;
+}
+
+/*.vid-unmute-OLD:before {*/
+/*
+  font-size: 1.3em;
+  margin-right: 8px;
+*/
+/*
+  line-height: .6;
+  line-height: 1.67;
+*/
+/*
+  font-family: VideoJS;
+  content: "\f104";
+  vertical-align: sub;
+*/
+/*}*/
+.vid-wrapper {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+/*SVG ICON SYSTEM*/
+.vid-icon {
+    display: inline-flex;
+    align-self: center;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+.vid-icon svg, .vid-icon img {
+    height: 2em;
+    width: 2em;
+    fill: currentColor;
+}
+
+.vid-icon.vid-baseline svg, .icon img {
+    /* top: .125em; */
+    position: relative;
+}
